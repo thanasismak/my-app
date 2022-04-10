@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ComicObj } from '../entities/ComicObj'
 
 export default function Catalogue(pageNumber) {
-    
+
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [comics, setComics] = useState([])
@@ -26,8 +26,8 @@ export default function Catalogue(pageNumber) {
             })
             setHasMore(comics.data.data.results.length > 0)
             setLoading(false)
-            console.log(md5(comics.data.data.results))
-            console.log(comics.data.data.results.slice(0, pageNumber))
+            //md5 hash
+            // console.log(md5(comics.data.data.results))
         }).catch(e => {
             if (axios.isCancel(e)) return
             setError(true);

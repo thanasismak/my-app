@@ -36,16 +36,16 @@ export default function ComicLayout({ comics }) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><CalendarDayFill/> ReleaseDate:</td>
+                                    <td><CalendarDayFill /> ReleaseDate:</td>
                                     <td>{new Date(comics.date).toDateString()}</td>
                                 </tr>
                                 <tr>
-                                    <td><BugFill/> IssueNumber:</td>
+                                    <td><BugFill /> IssueNumber:</td>
                                     <td className={style.textcenter}>{comics.issueNumber}</td>
                                 </tr>
                                 <tr>
-                                    <td><Paypal/> Cost:</td>
-                                    <td className={style.textcenter}>{comics.price}<CurrencyEuro/></td>
+                                    <td><Paypal /> Cost:</td>
+                                    <td className={style.textcenter}>{comics.price}<CurrencyEuro /></td>
                                 </tr>
                             </tbody>
                         </Card.Body>

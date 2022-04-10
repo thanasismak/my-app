@@ -4,11 +4,9 @@ import { Container, Col, Row } from 'react-bootstrap';
 import './App.css';
 import Catalogue from './services/Catalogue';
 import ComicLayout from './components/ComicLayout';
-import ComicInfoPanel from './components/ComicInfoPanel';
 
 export default function App() {
   const [pageNumber, setPageNumber] = useState(5)
-  // const [start, setStart] = useState(true)
   const { comics, hasMore, loading, error, eof } = Catalogue(pageNumber);
 
   const observer = useRef()
@@ -18,7 +16,6 @@ export default function App() {
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && hasMore) {
         setPageNumber(prevPageNumber => prevPageNumber + 1)
-        // setStart(false)
       }
     })
     if (node) observer.current.observe(node)
