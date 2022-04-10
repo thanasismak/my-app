@@ -6,6 +6,6 @@ export class ComicObj {
         this.id = apiComic.id;
         this.date = apiComic.dates[1].date;
         this.price = apiComic.prices[0].price;
-        this.issuNumber = apiComic.issueNumber;
+        this.issueNumber = apiComic.issueNumber;
     }
 }

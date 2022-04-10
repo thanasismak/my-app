@@ -1,49 +1,49 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import './App.css'; 
+
+import './App.css';
 import Catalogue from './services/Catalogue';
 import ComicLayout from './components/ComicLayout';
+import ComicInfoPanel from './components/ComicInfoPanel';
 
 export default function App() {
   const [pageNumber, setPageNumber] = useState(5)
+  // const [start, setStart] = useState(true)
+  const { comics, hasMore, loading, error, eof } = Catalogue(pageNumber);
 
-  const {comics,hasMore, loading, error, offset} = Catalogue(pageNumber);
-  const tempoffset = offset
   const observer = useRef()
-
   const lastComicElementRef = useCallback(node => {
-    if (loading) return 
+    if (loading) return
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(entries => {
-      if(entries[0].isIntersecting && hasMore) {
+      if (entries[0].isIntersecting && hasMore) {
         setPageNumber(prevPageNumber => prevPageNumber + 1)
+        // setStart(false)
       }
     })
     if (node) observer.current.observe(node)
   }, [loading, hasMore])
 
-  
+
   return (
     <>
-     {loading && !error
-             ? loading :
-              <Container fluid>
-                <Row>
-                  <Col lg={9}>
-                    {
-                    comics.map((comic, index) => {
-                      if (comics.length === index + 1) { 
-                      return <div ref={lastComicElementRef} key={comic.id} comics={comic}><ComicLayout ref={lastComicElementRef} key={comic.id} comics={comic}/></div>
-                    }
-                      return <ComicLayout key={comic.id} comics={comic}/>
-                    })
-                    }
-                    <>{loading && 'Loading...'}</>
-                    <>{error && 'Error'}</>
-                  </Col>
-                </Row>
-              </Container>
-      }
+      <Container fluid>
+        <Row>
+          <Col lg={6} md={7} sm={12}>
+            {comics.map((comic, index) => {
+              if (comics.length === index + 1) {
+                return <div ref={lastComicElementRef} key={comic.id} comics={comic}><ComicLayout key={comic.id} comics={comic} /></div>
+              } else {
+                return <ComicLayout key={comic.id} comics={comic} />
+              }
+            })
+            }
+            <>{loading && 'Loading...'}</>
+            <>{eof && 'No resources...'}</>
+            <>{error && 'Error'}</>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
